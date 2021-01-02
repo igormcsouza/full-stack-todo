@@ -1,6 +1,14 @@
 FROM python:3.8-alpine3.12
 
 RUN python3 -m pip install --upgrade pip
+
+RUN apk add --no-cache --virtual \
+        .build_deps \
+        libressl-dev \
+        musl-dev \
+        libffi-dev \
+        gcc
+
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
 

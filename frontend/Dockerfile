@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:10.19.0-alpine3.11
 
 # instala um servidor http simples para servir conteúdo estático
 RUN npm install -g http-server
