@@ -1,0 +1,15 @@
+name: Continuos Integration
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Image
+        run: docker-compose build
+      - name: Run Backend Test
+        run: docker-compose up backend database
+        run: docker-compose exec backend poetry run test
+
