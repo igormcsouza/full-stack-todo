@@ -1,6 +1,6 @@
 name: Continuos Integration
 
-on: push
+on: [push, pull_request]
 
 jobs:
   backend:
@@ -12,4 +12,4 @@ jobs:
       - name: Run Backend and Database Containers
         run: docker-compose up -d backend database
       - name: Run Test Backend Pipeline
-        run: docker-compose exec backend poetry run test
+        run: docker-compose run backend poetry run test
