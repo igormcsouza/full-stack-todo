@@ -1,1 +1,36 @@
-# Docker Compose YML File
+version: "3.7"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - ./frontend/:/frontend/
+      - /frontend/node_modules
+    ports:
+      - 8080:8080
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: flask run
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/:/backend/
+    ports:
+      - 2000:2000
+
+  database:
+    image: mongo:4.4.2
+    env_file: .env
+    volumes:
+      - ./mongo_volume:/data/todos
+    ports:
+      - "27017-27019:27017-27019"
+
+volumes:
+  mongo_volume:
