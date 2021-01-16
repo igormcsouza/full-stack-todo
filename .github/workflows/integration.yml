@@ -3,13 +3,13 @@ name: Continuos Integration
 on: push
 
 jobs:
-  build:
+  backend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Build Images
-        run: docker-compose build
+      - name: Build Backend Images
+        run: docker-compose build backend
       - name: Run Backend and Database Containers
-        run: docker-compose up backend database
+        run: docker-compose up backend database -d
       - name: Run Test Backend Pipeline
         run: docker-compose exec backend poetry run test
