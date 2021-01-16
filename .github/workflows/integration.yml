@@ -12,4 +12,4 @@ jobs:
       - name: Run Backend and Database Containers
         run: docker-compose up -d backend database
       - name: Run Test Backend Pipeline
-        run: docker-compose run backend poetry run test
+        run: docker-compose exec -T backend poetry run test
