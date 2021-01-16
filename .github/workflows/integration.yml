@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Build Image
+      - name: Build Images
         run: docker-compose build
-      - name: Run Backend Test
+      - name: Run Backend and Database Containers
         run: docker-compose up backend database
+      - name: Run Test Backend Pipeline
         run: docker-compose exec backend poetry run test
-
