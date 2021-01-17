@@ -53,6 +53,15 @@ const TodosListView: React.FC<{}> = () => {
     setValues([...remnant, value].sort((v, x) => v.id - x.id));
   };
 
+  const openEditPanel = (value: Itask) => () => {
+    console.log(value);
+  };
+
+  const handleDelete = (value: Itask) => () => {
+    const remnant = values.filter((v) => v.id !== value.id);
+    setValues(remnant.sort((v, x) => v.id - x.id));
+  };
+
   return (
     <List className={classes.root}>
       {values.map((value) => {
@@ -81,10 +90,18 @@ const TodosListView: React.FC<{}> = () => {
               primary={value.task}
             />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="edit-task">
+              <IconButton
+                onClick={openEditPanel(value)}
+                edge="end"
+                aria-label="edit-task"
+              >
                 <Edit />
               </IconButton>
-              <IconButton edge="end" aria-label="delete-task">
+              <IconButton
+                onClick={handleDelete(value)}
+                edge="end"
+                aria-label="delete-task"
+              >
                 <Delete />
               </IconButton>
             </ListItemSecondaryAction>
