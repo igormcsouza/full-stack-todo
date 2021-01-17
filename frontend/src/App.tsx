@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import TodoInput from "./components/TodoInput";
 import MainTitle from "./components/MainTitle";
+import TodosListView from "./components/TodosListView";
 
 const useStyles = makeStyles({
   root: {
@@ -49,6 +50,7 @@ function App() {
           variant="middle"
           orientation="horizontal"
         />
+        <TodosListView />
       </div>
     </div>
   );
