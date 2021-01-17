@@ -28,6 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "scroll",
       WebkitOverflowScrolling: "touch",
     },
+    whenChecked: {
+      textDecoration: "line-through",
+      textDecorationColor: "#8B8B8B",
+      textDecorationThickness: "2px",
+      color: "#8B8B8B",
+    },
   })
 );
 
@@ -69,7 +75,11 @@ const TodosListView: React.FC<{}> = () => {
                 inputProps={{ "aria-labelledby": labelId }}
               />
             </ListItemIcon>
-            <ListItemText id={labelId} primary={value.task} />
+            <ListItemText
+              className={value.checked ? classes.whenChecked : undefined}
+              id={labelId}
+              primary={value.task}
+            />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="edit-task">
                 <Edit />
