@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
   List,
@@ -11,7 +11,9 @@ import {
 } from "@material-ui/core";
 import { Delete, Edit } from "@material-ui/icons";
 
-interface Itask {
+import EditPanel from "./EditPanel";
+
+export interface Itask {
   id: number;
   task: string;
   checked: boolean;
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TodosListView: React.FC<{}> = () => {
   const classes = useStyles();
-  const [values, setValues] = React.useState([
+  const [values, setValues] = useState([
     { id: 0, task: "Do the Dishes", checked: false },
     { id: 1, task: "Do the Groceries", checked: false },
     { id: 2, task: "Do the I don't even know", checked: false },
@@ -47,14 +49,18 @@ const TodosListView: React.FC<{}> = () => {
     { id: 4, task: "Do the Job", checked: false },
   ]);
 
-  const handleToggle = (value: Itask) => () => {
+  const [currentTask, setCurrentTask] = useState(values[0]);
+  const [toggleEditPanel, setToggleEditPanel] = useState(false);
+
+  const handleCheckingTask = (value: Itask) => () => {
     const remnant = values.filter((v) => v.id !== value.id);
     value.checked = !value.checked;
     setValues([...remnant, value].sort((v, x) => v.id - x.id));
   };
 
-  const openEditPanel = (value: Itask) => () => {
-    console.log(value);
+  const handleEdit = (value: Itask) => () => {
+    setCurrentTask(value);
+    setToggleEditPanel(true);
   };
 
   const handleDelete = (value: Itask) => () => {
@@ -68,44 +74,56 @@ const TodosListView: React.FC<{}> = () => {
         const labelId = `checkbox-list-label-${value.id}`;
 
         return (
-          <ListItem
-            key={value.id}
-            role={undefined}
-            dense
-            button
-            onClick={handleToggle(value)}
-          >
-            <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={value.checked}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{ "aria-labelledby": labelId }}
-              />
-            </ListItemIcon>
-            <ListItemText
-              className={value.checked ? classes.whenChecked : undefined}
-              id={labelId}
-              primary={value.task}
+          <div>
+            {/*Edit Panel Opens when Edit Button is clicked*/}
+            <EditPanel
+              task={currentTask}
+              open={toggleEditPanel}
+              onClose={() => {
+                setToggleEditPanel(false);
+              }}
             />
-            <ListItemSecondaryAction>
-              <IconButton
-                onClick={openEditPanel(value)}
-                edge="end"
-                aria-label="edit-task"
-              >
-                <Edit />
-              </IconButton>
-              <IconButton
-                onClick={handleDelete(value)}
-                edge="end"
-                aria-label="delete-task"
-              >
-                <Delete />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+
+            {/* Actual List Items */}
+            <ListItem
+              key={value.id}
+              role={undefined}
+              dense
+              button
+              onClick={handleCheckingTask(value)}
+            >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={value.checked}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ "aria-labelledby": labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                className={value.checked ? classes.whenChecked : undefined}
+                id={labelId}
+                primary={value.task}
+              />
+              <ListItemSecondaryAction>
+                <IconButton
+                  onClick={handleEdit(value)}
+                  edge="end"
+                  aria-label="edit-task"
+                >
+                  <Edit />
+                </IconButton>
+                <IconButton
+                  onClick={handleDelete(value)}
+                  edge="end"
+                  aria-label="delete-task"
+                >
+                  <Delete />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          </div>
         );
       })}
     </List>
