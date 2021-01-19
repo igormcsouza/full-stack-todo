@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -10,10 +10,10 @@ import {
 } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
 
-import { Itask } from "./index";
+import { Todo, TodoContext } from "../../TodoContext";
 
 interface IEditPanel {
-  task: Itask;
+  task: Todo;
   open: boolean;
   onClose: () => void;
 }
@@ -27,8 +27,16 @@ const Transition = React.forwardRef(function Transition(
 
 const EditPanel: React.FC<IEditPanel> = (props: IEditPanel) => {
   const [taskName, setTaskName] = useState(props.task.task);
+  const { dispatch } = useContext(TodoContext);
 
-  const handleSave = (task: Itask, closePanel: () => void) => {
+  useEffect(() => {
+    setTaskName(props.task.task);
+  }, [props.task]);
+
+  const handleSave = (task: Todo, closePanel: () => void) => {
+    if (dispatch) {
+      dispatch({ type: "EDIT_TODO", payload: { task, newTaskName: taskName } });
+    }
     closePanel();
   };
 
@@ -54,7 +62,7 @@ const EditPanel: React.FC<IEditPanel> = (props: IEditPanel) => {
         <DialogContent>
           <TextField
             label="Task Name"
-            defaultValue={taskName}
+            value={taskName}
             onChange={handleTaskNameChange}
           />
         </DialogContent>
