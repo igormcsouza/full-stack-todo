@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
   List,
@@ -12,19 +12,14 @@ import {
 import { Delete, Edit } from "@material-ui/icons";
 
 import EditPanel from "./EditPanel";
-
-export interface Itask {
-  id: number;
-  task: string;
-  checked: boolean;
-}
+import { TodoContext, Todo } from "../../TodoContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
       maxWidth: 360,
-      maxHeight: 250,
+      height: 250,
       backgroundColor: theme.palette.background.paper,
       flexWrap: "wrap",
       overflowY: "scroll",
@@ -41,91 +36,94 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TodosListView: React.FC<{}> = () => {
   const classes = useStyles();
-  const [values, setValues] = useState([
-    { id: 0, task: "Do the Dishes", checked: false },
-    { id: 1, task: "Do the Groceries", checked: false },
-    { id: 2, task: "Do the I don't even know", checked: false },
-    { id: 3, task: "Do the Net", checked: false },
-    { id: 4, task: "Do the Job", checked: false },
-  ]);
+  const { state, dispatch } = useContext(TodoContext);
 
-  const [currentTask, setCurrentTask] = useState(values[0]);
+  const [currentTask, setCurrentTask] = useState<Todo>({
+    id: "",
+    task: "",
+    checked: false,
+  });
   const [toggleEditPanel, setToggleEditPanel] = useState(false);
 
-  const handleCheckingTask = (value: Itask) => () => {
-    const remnant = values.filter((v) => v.id !== value.id);
-    value.checked = !value.checked;
-    setValues([...remnant, value].sort((v, x) => v.id - x.id));
+  const handleCheckingTask = (value: Todo) => () => {
+    if (dispatch) {
+      dispatch({ type: "CHECK_TODO", payload: value });
+    }
   };
 
-  const handleEdit = (value: Itask) => () => {
+  const handleEdit = (value: Todo) => () => {
     setCurrentTask(value);
     setToggleEditPanel(true);
   };
 
-  const handleDelete = (value: Itask) => () => {
-    const remnant = values.filter((v) => v.id !== value.id);
-    setValues(remnant.sort((v, x) => v.id - x.id));
+  const handleDelete = (value: Todo) => () => {
+    if (dispatch) {
+      dispatch({ type: "DELETE_TODO", payload: value });
+    }
   };
 
   return (
     <List className={classes.root}>
-      {values.map((value) => {
-        const labelId = `checkbox-list-label-${value.id}`;
+      {state && state.todos ? (
+        state.todos.map((value) => {
+          const labelId = `checkbox-list-label-${value.id}`;
 
-        return (
-          <div>
-            {/*Edit Panel Opens when Edit Button is clicked*/}
-            <EditPanel
-              task={currentTask}
-              open={toggleEditPanel}
-              onClose={() => {
-                setToggleEditPanel(false);
-              }}
-            />
-
-            {/* Actual List Items */}
-            <ListItem
-              key={value.id}
-              role={undefined}
-              dense
-              button
-              onClick={handleCheckingTask(value)}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={value.checked}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                className={value.checked ? classes.whenChecked : undefined}
-                id={labelId}
-                primary={value.task}
+          return (
+            <div>
+              {/*Edit Panel Opens when Edit Button is clicked*/}
+              <EditPanel
+                task={currentTask}
+                open={toggleEditPanel}
+                onClose={() => {
+                  setToggleEditPanel(false);
+                }}
               />
-              <ListItemSecondaryAction>
-                <IconButton
-                  onClick={handleEdit(value)}
-                  edge="end"
-                  aria-label="edit-task"
-                >
-                  <Edit />
-                </IconButton>
-                <IconButton
-                  onClick={handleDelete(value)}
-                  edge="end"
-                  aria-label="delete-task"
-                >
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          </div>
-        );
-      })}
+
+              {/* Actual List Items */}
+              <ListItem
+                key={value.id}
+                role={undefined}
+                dense
+                button
+                onClick={handleCheckingTask(value)}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={value.checked}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ "aria-labelledby": labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  className={value.checked ? classes.whenChecked : undefined}
+                  id={labelId}
+                  primary={value.task}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={handleEdit(value)}
+                    edge="end"
+                    aria-label="edit-task"
+                  >
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    onClick={handleDelete(value)}
+                    edge="end"
+                    aria-label="delete-task"
+                  >
+                    <Delete />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </div>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </List>
   );
 };
