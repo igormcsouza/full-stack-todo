@@ -36,3 +36,8 @@ More details on how to deploy, please refer to this
 [link](https://create-react-app.dev/docs/deployment/#github-pages)
 
 The application is running on https://igormcsouza.github.io/full-stack-todo
+
+### Database
+
+The database for production was built using Mongo Atlas! There is free clusters
+available to small usage!
