@@ -1,9 +1,7 @@
 # FullStack Todo
 
 ![Continuous Integration](https://github.com/igormcsouza/full-stack-todo/workflows/Continuous%20Integration/badge.svg)
-
 ![Continuous Deployment](https://github.com/igormcsouza/full-stack-todo/workflows/Continuous%20Deployment/badge.svg)
-
 ![Heroku](http://heroku-badge.herokuapp.com/?app=full-stack-todo-bknd&style=flat&svg=1)
 
 Many times, when I'm coding my projects, I found myself forgetting some specific
