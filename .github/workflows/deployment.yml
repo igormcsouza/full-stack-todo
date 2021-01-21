@@ -26,6 +26,6 @@ jobs:
         working-directory: frontend/
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/igormcsouza/full-stack-todo.git
-          cd frontend && npm run deploy
+          npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
