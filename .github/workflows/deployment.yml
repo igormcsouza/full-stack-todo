@@ -20,8 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build Frontend Images
+        working-directory: frontend/
         run: npm install
       - name: Run Frontend Deployment to GH Pages
+        working-directory: frontend/
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/igormcsouza/full-stack-todo.git
           cd frontend && npm run deploy
