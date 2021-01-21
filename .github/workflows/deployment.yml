@@ -1,0 +1,22 @@
+name: Continuous Deployment
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Backend Images
+        run: echo "Im trying"
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Frontend Images
+        run: docker-compose build frontend
+      - name: Run Frontend Test using Jest
+        run: docker-compose run frontend npm run deploy
