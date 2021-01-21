@@ -1,0 +1,31 @@
+name: Continuous Deployment
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Backend Images
+        run: echo "Im trying"
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Frontend Images
+        working-directory: frontend/
+        run: npm install
+      - name: Run Frontend Deployment to GH Pages
+        working-directory: frontend/
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/igormcsouza/full-stack-todo.git
+          npm run deploy -- --user "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}

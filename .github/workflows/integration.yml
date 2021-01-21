@@ -1,0 +1,23 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Backend Images
+        run: docker-compose build backend
+      - name: Run Backend and Database Containers
+        run: docker-compose up -d backend database
+      - name: Run Test Backend Pipeline
+        run: docker-compose exec -T backend poetry run test
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Frontend Images
+        run: docker-compose build frontend
+      - name: Run Frontend Test using Jest
+        run: docker-compose run frontend npm run test -- --watchAll=false

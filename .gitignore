@@ -109,7 +109,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -157,3 +156,4 @@ yarn-debug.log*
 yarn-error.log*
 /.changelog
 yarn.lock
+.eslintcache
