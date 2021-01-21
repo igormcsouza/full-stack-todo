@@ -20,8 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build Frontend Images
-        run: docker-compose build frontend
-      - name: Run Frontend Test using Jest
-        run: docker-compose run frontend npm run deploy
+        run: npm install
+      - name: Run Frontend Deployment to GH Pages
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/igormcsouza/full-stack-todo.git
+          npm run deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
