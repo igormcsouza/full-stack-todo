@@ -12,9 +12,15 @@ jobs:
   backend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Build Backend Images
-        run: echo "Im trying"
+      - uses: akhileshns/heroku-deploy@v3.8.9
+        working-directory: backend/
+        with:
+          heroku_api_key: ${HEROKU_API_KEY}
+          heroku_app_name: "full-stack-todo-bknd"
+          heroku_email: "igormcsouza@gmail.com"
+          procfile: "backend.app:create_app"
+        env:
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
   frontend:
     runs-on: ubuntu-latest
     steps:
