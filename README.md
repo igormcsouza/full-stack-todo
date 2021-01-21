@@ -32,4 +32,7 @@ publishing this project, but fortunetly I found this issue which helped me 10
 folds! The [link](https://github.com/tschaub/gh-pages/issues/345) to anyone
 which want to take a look.
 
+More details on how to deploy, please refer to this
+[link](https://create-react-app.dev/docs/deployment/#github-pages)
+
 The application is running on https://igormcsouza.github.io/full-stack-todo
