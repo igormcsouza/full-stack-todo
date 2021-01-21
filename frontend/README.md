@@ -37,12 +37,8 @@ more information.
 
 -> `npm run build`
 
-Publish the application to a Github Pages.
-
-I had many issues on the way
-publishing this project, but fortunetly I found this issue which helped me 10
-folds! The [link](https://github.com/tschaub/gh-pages/issues/345) to anyone
-which want to take a look.
+Publish the application to a Github Pages. It uses a package known as
+**gh-pages**. More information on the main documentation.
 
 -> `npm run eject`
 

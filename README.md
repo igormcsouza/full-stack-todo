@@ -20,3 +20,12 @@ more information on the matter.
 
 In order to work fine, you'll need to get you _HEROKU API KEY_ on the account
 settings. Add this on the secrets, and should be great.
+
+### Frontend
+
+Deployed using simple [gh-pages](https://github.com/tschaub/gh-pages) package.
+
+I had many issues on the way
+publishing this project, but fortunetly I found this issue which helped me 10
+folds! The [link](https://github.com/tschaub/gh-pages/issues/345) to anyone
+which want to take a look.
