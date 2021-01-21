@@ -20,4 +20,4 @@ RUN poetry install
 
 COPY . /backend/
 
-CMD gunicorn -b 0.0.0.0:2000 --access-logfile - "backend.app:create_app"
+CMD gunicorn --access-logfile - "backend.app:create_app"

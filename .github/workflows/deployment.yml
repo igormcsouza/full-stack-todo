@@ -13,14 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: akhileshns/heroku-deploy@v3.8.9
-        working-directory: backend/
         with:
           heroku_api_key: ${HEROKU_API_KEY}
           heroku_app_name: "full-stack-todo-bknd"
           heroku_email: "igormcsouza@gmail.com"
-          procfile: "backend.app:create_app"
+          usedocker: true
+          appdir: "backend"
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+          HD_MONGO_URI: ${{secrets.MONGO_URI}}
   frontend:
     runs-on: ubuntu-latest
     steps:
