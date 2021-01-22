@@ -18,7 +18,7 @@ export const reducer = (state: State, action: Actions): State => {
         const newTodo: Todo = {
           when: (+new Date()).toString(),
           task: action.payload,
-          checked: false,
+          done: false,
           by: "Igor Souza",
         };
 
@@ -29,7 +29,7 @@ export const reducer = (state: State, action: Actions): State => {
       return newState;
 
     case "CHECK_TODO":
-      action.payload.checked = !action.payload.checked;
+      action.payload.done = !action.payload.done;
 
       update_todo(action.payload);
 

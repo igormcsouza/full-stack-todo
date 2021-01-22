@@ -11,7 +11,7 @@ export interface Todo {
   id?: string;
   task: string;
   when: string;
-  checked: boolean;
+  done: boolean;
   by: string;
 }
 

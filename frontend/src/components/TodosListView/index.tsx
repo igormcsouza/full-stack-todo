@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "scroll",
       WebkitOverflowScrolling: "touch",
     },
-    whenChecked: {
+    whenDone: {
       textDecoration: "line-through",
       textDecorationColor: "#8B8B8B",
       textDecorationThickness: "2px",
@@ -42,7 +42,7 @@ const TodosListView: React.FC<{}> = () => {
     id: "",
     task: "",
     when: "",
-    checked: false,
+    done: false,
     by: "",
   });
   const [toggleEditPanel, setToggleEditPanel] = useState(false);
@@ -92,14 +92,14 @@ const TodosListView: React.FC<{}> = () => {
                 <ListItemIcon>
                   <Checkbox
                     edge="start"
-                    checked={value.checked}
+                    checked={value.done}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}
                   />
                 </ListItemIcon>
                 <ListItemText
-                  className={value.checked ? classes.whenChecked : undefined}
+                  className={value.done ? classes.whenDone : undefined}
                   id={labelId}
                   primary={value.task}
                 />
