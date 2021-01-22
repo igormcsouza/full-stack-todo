@@ -97,7 +97,7 @@ def test_api_get_one(client):
     assert r.status_code == 200
     assert 'todo' in r.json.keys()
 
-    result = loads(r.json['todo'])
+    result = r.json['todo']
 
     assert len(result) == 1
     assert result[0]['_id'] == _id

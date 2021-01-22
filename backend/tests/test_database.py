@@ -48,7 +48,6 @@ def test_database_search():
     _ = instance.insert({'task': 'Test this guy'})
 
     result = instance.search({'task': 'Test this guy'})
-    result = loads(result)
 
     assert result != None
     assert len(result) == 1
@@ -64,7 +63,6 @@ def test_database_update():
 
     instance.update({'task': 'Test this guy'}, {'by': 'me'})
     result = instance.search({'task': 'Test this guy'})
-    result = loads(result)
 
     assert result != None
     assert len(result) == 1
@@ -81,7 +79,6 @@ def test_database_delete():
 
     instance.delete({'task': 'Test this guy'})
     result = instance.search({'task': 'Test this guy'})
-    result = loads(result)
 
     assert result == []
 
