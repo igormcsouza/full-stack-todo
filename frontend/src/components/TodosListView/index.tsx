@@ -41,7 +41,9 @@ const TodosListView: React.FC<{}> = () => {
   const [currentTask, setCurrentTask] = useState<Todo>({
     id: "",
     task: "",
+    when: "",
     checked: false,
+    by: "",
   });
   const [toggleEditPanel, setToggleEditPanel] = useState(false);
 

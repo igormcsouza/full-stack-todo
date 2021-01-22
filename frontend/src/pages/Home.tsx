@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import TodoContextProvider from "../TodoContext";
 import TodoInput from "../components/TodoInput";
 import MainTitle from "../components/MainTitle";
 import TodosListView from "../components/TodosListView";
+import { TodoContext } from "../TodoContext";
 
 const useStyles = makeStyles({
   root: {
@@ -40,22 +40,25 @@ const useStyles = makeStyles({
 
 const Home: React.FC<{}> = () => {
   const classes = useStyles();
+  const { dispatch } = useContext(TodoContext);
+
+  // useEffect(() => {
+  //   if (dispatch) dispatch({ type: "POPULATE" });
+  // }, []);
 
   return (
-    <TodoContextProvider>
-      <div className={classes.root}>
-        <div className={classes.container}>
-          <MainTitle />
-          <TodoInput />
-          <Divider
-            className={classes.divider}
-            variant="middle"
-            orientation="horizontal"
-          />
-          <TodosListView />
-        </div>
+    <div className={classes.root}>
+      <div className={classes.container}>
+        <MainTitle />
+        <TodoInput />
+        <Divider
+          className={classes.divider}
+          variant="middle"
+          orientation="horizontal"
+        />
+        <TodosListView />
       </div>
-    </TodoContextProvider>
+    </div>
   );
 };
 

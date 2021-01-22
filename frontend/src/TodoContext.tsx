@@ -8,9 +8,11 @@ type ContextProps = {
 };
 
 export interface Todo {
-  id: string;
+  id?: string;
   task: string;
+  when: string;
   checked: boolean;
+  by: string;
 }
 
 export interface State {
@@ -19,7 +21,7 @@ export interface State {
 
 export interface Actions {
   type: string;
-  payload: any;
+  payload?: any;
 }
 
 export const TodoContext = createContext<Partial<ContextProps>>({});

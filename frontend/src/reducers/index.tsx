@@ -1,5 +1,5 @@
+import { delete_todo, fetch_todos, insert_todo, update_todo } from "../utils";
 import { State, Actions, Todo } from "../TodoContext";
-import { v4 as uuid } from "uuid";
 
 export const INITIAL_STATE: State = {
   todos: [],
@@ -9,66 +9,46 @@ export const reducer = (state: State, action: Actions): State => {
   let newState: State = {};
 
   switch (action.type) {
-    case "ADD_TODO":
-      let newSetTodos: Array<Todo> = [];
+    case "POPULATE":
+      fetch_todos().then((value) => (newState = value));
+      return newState;
 
+    case "ADD_TODO":
       if (state.todos) {
         const newTodo: Todo = {
-          id: uuid(),
+          when: (+new Date()).toString(),
           task: action.payload,
           checked: false,
+          by: "Igor Souza",
         };
-        newSetTodos = [...state.todos, newTodo];
+
+        insert_todo(newTodo);
       }
 
-      newState = { ...state, todos: newSetTodos };
+      fetch_todos().then((value) => (newState = value));
       return newState;
 
     case "CHECK_TODO":
-      let remnant: Array<Todo> = [];
-
-      if (state.todos) {
-        remnant = state.todos.filter((v) => v.id !== action.payload.id);
-      }
-
       action.payload.checked = !action.payload.checked;
 
-      newState = {
-        ...state,
-        todos: [...remnant, action.payload],
-      };
+      update_todo(action.payload);
 
+      fetch_todos().then((value) => (newState = value));
       return newState;
 
     case "EDIT_TODO":
       let todo = action.payload.task;
-      let tasks: Array<Todo> = [];
-
-      if (state.todos) {
-        tasks = state.todos.filter((v) => v.id !== todo.id);
-      }
 
       todo.task = action.payload.newTaskName;
+      update_todo(todo);
 
-      newState = {
-        ...state,
-        todos: [...tasks, todo],
-      };
-
+      fetch_todos().then((value) => (newState = value));
       return newState;
 
     case "DELETE_TODO":
-      let todos: Array<Todo> = [];
+      delete_todo(action.payload);
 
-      if (state.todos) {
-        todos = state.todos.filter((v) => v.id !== action.payload.id);
-      }
-
-      newState = {
-        ...state,
-        todos: [...todos],
-      };
-
+      fetch_todos().then((value) => (newState = value));
       return newState;
 
     default:
