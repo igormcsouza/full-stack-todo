@@ -5,7 +5,7 @@ import { State, Todo } from "./TodoContext";
 // const base = "http://backend:2500";
 const base = "https://full-stack-todo-bknd.herokuapp.com";
 
-export async function fetch_todos(): Promise<State> {
+export async function fetch_todos() {
   let data: State = {};
 
   await axios
