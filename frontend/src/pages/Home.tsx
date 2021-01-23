@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import TodoInput from "../components/TodoInput";
 import MainTitle from "../components/MainTitle";
 import TodosListView from "../components/TodosListView";
-import { TodoContext } from "../TodoContext";
 
 const useStyles = makeStyles({
   root: {
@@ -40,11 +39,6 @@ const useStyles = makeStyles({
 
 const Home: React.FC<{}> = () => {
   const classes = useStyles();
-  const { dispatch } = useContext(TodoContext);
-
-  // useEffect(() => {
-  //   if (dispatch) dispatch({ type: "POPULATE" });
-  // }, []);
 
   return (
     <div className={classes.root}>
