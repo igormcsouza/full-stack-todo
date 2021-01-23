@@ -25,7 +25,10 @@ export const reducer = (state: State, action: Actions): State => {
         insert_todo(newTodo);
       }
 
-      fetch_todos().then((value) => (newState = value));
+      fetch_todos().then((value) => {
+        newState = value;
+      });
+
       return newState;
 
     case "CHECK_TODO":

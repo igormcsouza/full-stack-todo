@@ -1,22 +1,21 @@
 import axios from "axios";
 
 import { State, Todo } from "./TodoContext";
+
 // const base = "http://backend:2500";
 const base = "https://full-stack-todo-bknd.herokuapp.com";
 
 export async function fetch_todos(): Promise<State> {
-  let todos: State = {};
+  let data: State = {};
 
   await axios
     .get<State>(base + "/api/todo")
     .then((response) => {
-      const { data } = response;
-      todos = data;
+      data = response.data;
     })
     .catch((e) => console.log(e));
 
-  console.log(typeof todos.todos);
-  return todos;
+  return data;
 }
 
 export async function insert_todo(todo: Todo) {
