@@ -13,6 +13,7 @@ import { Delete, Edit } from "@material-ui/icons";
 
 import EditPanel from "./EditPanel";
 import { TodoContext, Todo } from "../../TodoContext";
+import { update_todo, delete_todo } from "../../utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "scroll",
       WebkitOverflowScrolling: "touch",
     },
-    whenChecked: {
+    whenDone: {
       textDecoration: "line-through",
       textDecorationColor: "#8B8B8B",
       textDecorationThickness: "2px",
@@ -39,16 +40,20 @@ const TodosListView: React.FC<{}> = () => {
   const { state, dispatch } = useContext(TodoContext);
 
   const [currentTask, setCurrentTask] = useState<Todo>({
-    id: "",
+    _id: "",
     task: "",
-    checked: false,
+    when: "",
+    done: false,
+    by: "",
   });
   const [toggleEditPanel, setToggleEditPanel] = useState(false);
 
   const handleCheckingTask = (value: Todo) => () => {
-    if (dispatch) {
-      dispatch({ type: "CHECK_TODO", payload: value });
-    }
+    value.done = !value.done;
+
+    update_todo(value).then(() => {
+      if (dispatch) dispatch({ type: "TRIGGER", payload: true });
+    });
   };
 
   const handleEdit = (value: Todo) => () => {
@@ -57,19 +62,19 @@ const TodosListView: React.FC<{}> = () => {
   };
 
   const handleDelete = (value: Todo) => () => {
-    if (dispatch) {
-      dispatch({ type: "DELETE_TODO", payload: value });
-    }
+    delete_todo(value).then(() => {
+      if (dispatch) dispatch({ type: "TRIGGER", payload: true });
+    });
   };
 
   return (
     <List className={classes.root}>
       {state && state.todos ? (
         state.todos.map((value) => {
-          const labelId = `checkbox-list-label-${value.id}`;
+          const labelId = `checkbox-list-label-${value._id}`;
 
           return (
-            <div>
+            <div key={value._id}>
               {/*Edit Panel Opens when Edit Button is clicked*/}
               <EditPanel
                 task={currentTask}
@@ -81,7 +86,7 @@ const TodosListView: React.FC<{}> = () => {
 
               {/* Actual List Items */}
               <ListItem
-                key={value.id}
+                key={value._id}
                 role={undefined}
                 dense
                 button
@@ -90,14 +95,14 @@ const TodosListView: React.FC<{}> = () => {
                 <ListItemIcon>
                   <Checkbox
                     edge="start"
-                    checked={value.checked}
+                    checked={value.done}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}
                   />
                 </ListItemIcon>
                 <ListItemText
-                  className={value.checked ? classes.whenChecked : undefined}
+                  className={value.done ? classes.whenDone : undefined}
                   id={labelId}
                   primary={value.task}
                 />

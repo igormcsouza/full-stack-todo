@@ -3,7 +3,8 @@ import { TextField, Grid, IconButton } from "@material-ui/core";
 import { SendRounded } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { TodoContext } from "../../TodoContext";
+import { Todo, TodoContext } from "../../TodoContext";
+import { insert_todo } from "../../utils";
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +20,17 @@ const TodoInput: React.FC<{}> = () => {
   const handleClick = (
     event: React.MouseEvent<HTMLSpanElement, MouseEvent>
   ) => {
-    if (dispatch) dispatch({ type: "ADD_TODO", payload: task });
+    const newTodo: Todo = {
+      when: (+new Date()).toString(),
+      task: task,
+      done: false,
+      by: "Igor Souza",
+    };
+
+    insert_todo(newTodo).then(() => {
+      if (dispatch) dispatch({ type: "TRIGGER", payload: true });
+    });
+
     setTask("");
   };
 
