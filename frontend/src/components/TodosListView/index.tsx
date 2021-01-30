@@ -39,7 +39,7 @@ const TodosListView: React.FC<{}> = () => {
   const { state, dispatch } = useContext(TodoContext);
 
   const [currentTask, setCurrentTask] = useState<Todo>({
-    id: "",
+    _id: "",
     task: "",
     when: "",
     done: false,
@@ -68,7 +68,7 @@ const TodosListView: React.FC<{}> = () => {
     <List className={classes.root}>
       {state && state.todos ? (
         state.todos.map((value) => {
-          const labelId = `checkbox-list-label-${value.id}`;
+          const labelId = `checkbox-list-label-${value._id}`;
 
           return (
             <div>
@@ -83,7 +83,7 @@ const TodosListView: React.FC<{}> = () => {
 
               {/* Actual List Items */}
               <ListItem
-                key={value.id}
+                key={value._id}
                 role={undefined}
                 dense
                 button

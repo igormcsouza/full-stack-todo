@@ -3,14 +3,20 @@ import { State, Actions, Todo } from "../TodoContext";
 
 export const INITIAL_STATE: State = {
   todos: [],
+  trigger: true,
 };
 
 export const reducer = (state: State, action: Actions): State => {
+  console.log("Was called");
   switch (action.type) {
     case "REPOPULATE":
-      const newState = { ...state, todos: action.payload };
-
-      return newState;
+      console.log("We Are HERE");
+      console.log(action.payload);
+      return {
+        ...state,
+        todos: action.payload,
+        trigger: false,
+      };
 
     case "ADD_TODO":
       if (state.todos) {
@@ -24,14 +30,14 @@ export const reducer = (state: State, action: Actions): State => {
         insert_todo(newTodo);
       }
 
-      return state;
+      return { ...state, trigger: true };
 
     case "CHECK_TODO":
       action.payload.done = !action.payload.done;
 
       update_todo(action.payload);
 
-      return state;
+      return { ...state, trigger: true };
 
     case "EDIT_TODO":
       let todo = action.payload.task;
@@ -39,12 +45,12 @@ export const reducer = (state: State, action: Actions): State => {
       todo.task = action.payload.newTaskName;
       update_todo(todo);
 
-      return state;
+      return { ...state, trigger: true };
 
     case "DELETE_TODO":
       delete_todo(action.payload);
 
-      return state;
+      return { ...state, trigger: true };
 
     default:
       return state;
