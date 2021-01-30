@@ -11,6 +11,7 @@ import {
 import { TransitionProps } from "@material-ui/core/transitions";
 
 import { Todo, TodoContext } from "../../TodoContext";
+import { update_todo } from "../../utils";
 
 interface IEditPanel {
   task: Todo;
@@ -33,10 +34,13 @@ const EditPanel: React.FC<IEditPanel> = (props: IEditPanel) => {
     setTaskName(props.task.task);
   }, [props.task]);
 
-  const handleSave = (task: Todo, closePanel: () => void) => {
-    if (dispatch) {
-      dispatch({ type: "EDIT_TODO", payload: { task, newTaskName: taskName } });
-    }
+  const handleSave = (todo: Todo, closePanel: () => void) => {
+    todo.task = taskName;
+
+    update_todo(todo).then(() => {
+      if (dispatch) dispatch({ type: "TRIGGER", payload: true });
+    });
+
     closePanel();
   };
 

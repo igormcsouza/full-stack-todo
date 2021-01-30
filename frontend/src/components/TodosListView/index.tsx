@@ -13,6 +13,7 @@ import { Delete, Edit } from "@material-ui/icons";
 
 import EditPanel from "./EditPanel";
 import { TodoContext, Todo } from "../../TodoContext";
+import { update_todo, delete_todo } from "../../utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,9 +49,11 @@ const TodosListView: React.FC<{}> = () => {
   const [toggleEditPanel, setToggleEditPanel] = useState(false);
 
   const handleCheckingTask = (value: Todo) => () => {
-    if (dispatch) {
-      dispatch({ type: "CHECK_TODO", payload: value });
-    }
+    value.done = !value.done;
+
+    update_todo(value).then(() => {
+      if (dispatch) dispatch({ type: "TRIGGER", payload: true });
+    });
   };
 
   const handleEdit = (value: Todo) => () => {
@@ -59,9 +62,9 @@ const TodosListView: React.FC<{}> = () => {
   };
 
   const handleDelete = (value: Todo) => () => {
-    if (dispatch) {
-      dispatch({ type: "DELETE_TODO", payload: value });
-    }
+    delete_todo(value).then(() => {
+      if (dispatch) dispatch({ type: "TRIGGER", payload: true });
+    });
   };
 
   return (
