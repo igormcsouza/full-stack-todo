@@ -6,11 +6,8 @@ export const INITIAL_STATE: State = {
 };
 
 export const reducer = (state: State, action: Actions): State => {
-  console.log("Was called");
   switch (action.type) {
     case "POPULATE":
-      console.log("We Are HERE");
-      console.log(action.payload);
       return {
         ...state,
         todos: action.payload,
@@ -18,8 +15,6 @@ export const reducer = (state: State, action: Actions): State => {
       };
 
     case "TRIGGER":
-      console.log("We Are HERE ON TRIGGER");
-      console.log(action.payload);
       return { ...state, trigger: action.payload };
 
     default:
