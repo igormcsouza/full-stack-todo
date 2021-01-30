@@ -49,7 +49,7 @@ const Home: React.FC<{}> = () => {
       setIsLoading(true);
 
       fetch_todos().then((todos) => {
-        if (dispatch) dispatch({ type: "REPOPULATE", payload: todos });
+        if (dispatch) dispatch({ type: "POPULATE", payload: todos });
       });
 
       setIsLoading(false);

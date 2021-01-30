@@ -23,7 +23,9 @@ export async function insert_todo(todo: Todo) {
 }
 
 export async function update_todo(todo: Todo) {
-  await axios.put(base + "/api/todo/" + todo._id).catch((e) => console.log(e));
+  await axios
+    .put(base + "/api/todo/" + todo._id, todo)
+    .catch((e) => console.log(e));
 }
 
 export async function delete_todo(todo: Todo) {

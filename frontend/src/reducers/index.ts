@@ -9,7 +9,7 @@ export const INITIAL_STATE: State = {
 export const reducer = (state: State, action: Actions): State => {
   console.log("Was called");
   switch (action.type) {
-    case "REPOPULATE":
+    case "POPULATE":
       console.log("We Are HERE");
       console.log(action.payload);
       return {
