@@ -74,7 +74,7 @@ const TodosListView: React.FC<{}> = () => {
           const labelId = `checkbox-list-label-${value._id}`;
 
           return (
-            <div>
+            <div key={value._id}>
               {/*Edit Panel Opens when Edit Button is clicked*/}
               <EditPanel
                 task={currentTask}
