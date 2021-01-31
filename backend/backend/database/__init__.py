@@ -1,6 +1,7 @@
 from os import getenv
 from json import JSONEncoder
 from bson import ObjectId
+from typing import Dict, Any, List
 
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -26,8 +27,13 @@ class DatabaseWrapper:
             print('There is an erro connecting to the database', e)
 
     @staticmethod
-    def encode(o: dict) -> str:
-        return JSONEncoderDocument().encode(o)
+    def encode(o: List[dict]) -> List[Dict[str, Any]]:
+        for u in o:
+            if '_id' in u.keys():
+                u['_id'] = JSONEncoderDocument().encode(u['_id']).replace(
+                    '"', '')
+
+        return o
 
     def search(self, query):
         try:

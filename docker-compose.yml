@@ -22,7 +22,7 @@ services:
     volumes:
       - ./backend/:/backend/
     ports:
-      - 2000:2000
+      - 2500:2500
 
   database:
     image: mongo:4.4.2

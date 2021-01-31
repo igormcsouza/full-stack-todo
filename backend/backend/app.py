@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 
 from . import restapi
+from .extensions import cors
 
 
 def create_app_minimal():
@@ -16,5 +17,6 @@ def create_app():
         return jsonify({ 'status': 'Good' })
 
     restapi.init_app(app)
+    cors.init_app(app)
 
     return app
