@@ -10,36 +10,30 @@ just sometimes. Thinking of it, I came up with an idea, to create an entire
 project to hold all those pieces of code, such as github actions sintax,
 database connections and so on.
 
-## Deploy applications with Github Actions
+## How is it built?
 
-### Backend
-
-The service I choose to host the backend was the Heroku! It is very limited, but
-for this purpose it will suite just fine! There is an Actions prepared and very
-good for this, go to this
-[link](https://github.com/marketplace/actions/deploy-to-heroku#env-file) for
-more information on the matter.
-
-In order to work fine, you'll need to get you _HEROKU API KEY_ on the account
-settings. Add this on the secrets, and should be great.
-
-The application is running on https://full-stack-todo-bknd.herokuapp.com/
+I decided to split the frontend and the backend. I'm using
+[React.js](https://reactjs.org/) on the front side, and
+[Flask](https://flask.palletsprojects.com/en/1.1.x/) on the back side.
 
 ### Frontend
 
-Deployed using simple [gh-pages](https://github.com/tschaub/gh-pages) package.
+The frontend is deployed at [Github Pages](https://pages.github.com/), which is
+a great feature to deploy those kind of applications! There are a Javascript
+Package that helps to put **React.js** applications at **Github Pages**.
 
-I had many issues on the way
-publishing this project, but fortunetly I found this issue which helped me 10
-folds! The [link](https://github.com/tschaub/gh-pages/issues/345) to anyone
-which want to take a look.
+More about on [Frontend](frontend/README.md)
 
-More details on how to deploy, please refer to this
-[link](https://create-react-app.dev/docs/deployment/#github-pages)
+### Backend
 
-The application is running on https://igormcsouza.github.io/full-stack-todo
+On the backend side, I choose to use **Flask** only because is the tool I'm used
+to. Nevertheless, this tool is very scalable and simple to use when you have
+small projects like this one. I used [Heroku](https://www.heroku.com/) to host
+my backend, is very nice even when is free.
+
+More about on [Backend](backend/README.md)
 
 ### Database
 
-The database for production was built using Mongo Atlas! There is free clusters
+The database for production was built using Mongo Atlas! There are free clusters
 available to small usage!
